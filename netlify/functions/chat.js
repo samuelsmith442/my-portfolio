@@ -14,19 +14,32 @@ exports.handler = async function(event) {
   }
 
   try {
+    // Log the incoming request (without sensitive data)
+    console.log('Received request:', { 
+      method: event.httpMethod,
+      path: event.path,
+      headers: Object.keys(event.headers),
+      hasBody: !!event.body
+    });
+    
     const body = JSON.parse(event.body);
     
     // Make request to OpenAI API
     // Netlify automatically makes environment variables available via process.env
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = process.env.VITE_OPEN_API_KEY;
     
     if (!apiKey) {
+      console.error('API key not configured');
       return {
         statusCode: 500,
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ error: 'API key not configured' })
       };
     }
     
+    console.log('Making request to OpenAI API');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -36,7 +49,25 @@ exports.handler = async function(event) {
       body: JSON.stringify(body)
     });
     
+    // Check if the response is successful
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('OpenAI API error:', response.status, errorText);
+      return {
+        statusCode: response.status,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          error: 'Error from OpenAI API', 
+          status: response.status,
+          details: errorText
+        })
+      };
+    }
+    
     const data = await response.json();
+    console.log('Received successful response from OpenAI');
     
     // Return the response from OpenAI
     return {
@@ -47,10 +78,16 @@ exports.handler = async function(event) {
       body: JSON.stringify(data)
     };
   } catch (error) {
-    console.log('Error:', error);
+    console.error('Function error:', error.message);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to process request' })
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        error: 'Failed to process request',
+        message: error.message
+      })
     };
   }
 };

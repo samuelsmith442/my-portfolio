@@ -48,13 +48,16 @@ const SamuelChatbot = ({ hideHeader = false }) => {
       // Use Netlify function in production, local proxy in development
       const endpoint = import.meta.env.PROD ? '/api/chat' : '/api/chat/completions';
       
+      console.log('Using endpoint:', endpoint);
+      console.log('Environment:', import.meta.env.PROD ? 'production' : 'development');
+      
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           // Only send API key in headers for local development
           ...(!import.meta.env.PROD && {
-            'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`
+            'Authorization': `Bearer ${import.meta.env.VITE_OPEN_API_KEY}`
           })
         },
         body: JSON.stringify({
@@ -62,14 +65,26 @@ const SamuelChatbot = ({ hideHeader = false }) => {
           messages: updatedMessages
         })
       });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('API Error:', response.status, errorText);
+        throw new Error(`API error ${response.status}: ${errorText}`);
+      }
 
       const data = await response.json();
+      
+      if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+        console.error('Unexpected API response format:', data);
+        throw new Error('Unexpected API response format');
+      }
+      
       const botReply = data.choices[0].message.content;
       setMessages([...updatedMessages, { role: 'assistant', content: botReply }]);
       setUserInput('');
     } catch (error) {
       console.error('Error:', error);
-      setMessages([...updatedMessages, { role: 'assistant', content: "Sorry, I'm having trouble responding. Try again later!" }]);
+      setMessages([...updatedMessages, { role: 'assistant', content: `Sorry, I'm having trouble responding. Error: ${error.message}` }]);
     } finally {
       setIsLoading(false);
     }
