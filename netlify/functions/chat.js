@@ -26,7 +26,11 @@ exports.handler = async function(event) {
     
     // Make request to OpenAI API
     // Netlify automatically makes environment variables available via process.env
-    const apiKey = process.env.VITE_OPEN_API_KEY;
+    // Try multiple possible environment variable names
+    const apiKey = process.env.VITE_OPEN_API_KEY || process.env.OPEN_API_KEY || process.env.OPENAI_API_KEY;
+    
+    // Log available environment variables (without values for security)
+    console.log('Available env vars:', Object.keys(process.env).filter(key => key.includes('API') || key.includes('OPEN')));
     
     if (!apiKey) {
       console.error('API key not configured');
@@ -35,7 +39,11 @@ exports.handler = async function(event) {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ error: 'API key not configured' })
+        body: JSON.stringify({ 
+          error: 'API key not configured', 
+          message: 'Please add OPENAI_API_KEY (without VITE_ prefix) to your Netlify environment variables',
+          availableEnvVars: Object.keys(process.env).filter(key => !key.includes('SECRET') && !key.includes('TOKEN'))
+        })
       };
     }
     
