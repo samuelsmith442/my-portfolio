@@ -12,15 +12,22 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+    setIsMenuOpen(false)
+  }
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     })
-    setIsMenuOpen(false)
-  }
-
-  const closeMenu = () => {
     setIsMenuOpen(false)
   }
 
@@ -73,8 +80,15 @@ const Navbar = () => {
             <button onClick={scrollToTop} className="text-white hover:text-blue-600 transition-colors">
               Home
             </button>
-            <a href="#projects" className="text-white hover:text-blue-600 transition-colors">Projects</a>
-            <a href="#contact" className="text-white hover:text-blue-600 transition-colors">Contact</a>
+            <button onClick={() => scrollToSection('about')} className="text-white hover:text-blue-600 transition-colors">
+              About
+            </button>
+            <button onClick={() => scrollToSection('projects')} className="text-white hover:text-blue-600 transition-colors">
+              Projects
+            </button>
+            <button onClick={() => scrollToSection('contact')} className="text-white hover:text-blue-600 transition-colors">
+              Contact
+            </button>
           </div>
         </div>
         
@@ -88,20 +102,24 @@ const Navbar = () => {
               >
                 Home
               </button>
-              <a 
-                href="#projects" 
-                onClick={closeMenu}
-                className="text-white hover:text-blue-600 transition-colors py-2 px-4"
+              <button 
+                onClick={() => scrollToSection('about')} 
+                className="text-white hover:text-blue-600 transition-colors py-2 px-4 text-left"
+              >
+                About
+              </button>
+              <button 
+                onClick={() => scrollToSection('projects')} 
+                className="text-white hover:text-blue-600 transition-colors py-2 px-4 text-left"
               >
                 Projects
-              </a>
-              <a 
-                href="#contact" 
-                onClick={closeMenu}
-                className="text-white hover:text-blue-600 transition-colors py-2 px-4"
+              </button>
+              <button 
+                onClick={() => scrollToSection('contact')} 
+                className="text-white hover:text-blue-600 transition-colors py-2 px-4 text-left"
               >
                 Contact
-              </a>
+              </button>
             </div>
           </div>
         )}
