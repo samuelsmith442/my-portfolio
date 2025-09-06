@@ -81,10 +81,13 @@ const Navbar = () => {
               Home
             </button>
             <button onClick={() => scrollToSection('about')} className="text-white hover:text-blue-600 transition-colors">
-              About
+              About Me
             </button>
             <button onClick={() => scrollToSection('projects')} className="text-white hover:text-blue-600 transition-colors">
               Projects
+            </button>
+            <button onClick={() => scrollToSection('chatbot')} className="text-white hover:text-blue-600 transition-colors">
+              AI Twin
             </button>
             <button onClick={() => scrollToSection('contact')} className="text-white hover:text-blue-600 transition-colors">
               Contact
@@ -106,13 +109,19 @@ const Navbar = () => {
                 onClick={() => scrollToSection('about')} 
                 className="text-white hover:text-blue-600 transition-colors py-2 px-4 text-left"
               >
-                About
+                About Me
               </button>
               <button 
                 onClick={() => scrollToSection('projects')} 
                 className="text-white hover:text-blue-600 transition-colors py-2 px-4 text-left"
               >
                 Projects
+              </button>
+              <button 
+                onClick={() => scrollToSection('chatbot')} 
+                className="text-white hover:text-blue-600 transition-colors py-2 px-4 text-left"
+              >
+                AI Twin
               </button>
               <button 
                 onClick={() => scrollToSection('contact')} 

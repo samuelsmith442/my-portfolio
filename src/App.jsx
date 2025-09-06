@@ -6,6 +6,8 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ChatbotSection from './components/ChatbotSection';
+import FloatingChatButton from './components/FloatingChatButton';
 
 function App() {
   return (
@@ -14,10 +16,12 @@ function App() {
       <div className="pt-16">
         <Hero />
         <About />
+        <ChatbotSection />
         <Projects />
         <Contact />
         <Footer />
       </div>
+      <FloatingChatButton />
     </div>
   );
 }
