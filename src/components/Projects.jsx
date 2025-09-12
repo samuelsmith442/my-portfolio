@@ -19,7 +19,7 @@ const Projects = () => {
     {
       title: "Web3 Coffee Shop",
       description: "A blockchain-based coffee shop application that allows customers to order and pay for coffee using cryptocurrency.",
-      tech: ["Web3", "Metamask", "React", "Solidity"],
+      tech: ["Web3", "Metamask", "React"],
       image: web3CoffeeShop,
       link: "https://glittering-twilight-c4bc42.netlify.app/",
       github: "https://github.com/samuelsmith442/web3-coffee-shop"
@@ -123,3 +123,4 @@ const Projects = () => {
 }
 
 export default Projects
+

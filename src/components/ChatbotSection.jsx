@@ -1,32 +1,28 @@
-import { useState, useEffect } from 'react';
-import { motion, useAnimation } from 'motion/react';
+import { useState, useRef, useEffect } from 'react';
+import { motion } from 'motion/react';
 import SamuelChatbot from './SamuelChatbot';
 
 const ChatbotSection = () => {
   const [showChatbot, setShowChatbot] = useState(false);
-  const [showAttention, setShowAttention] = useState(false);
-  const controls = useAnimation();
+  const chatbotRef = useRef(null);
   
+  // Effect to scroll chatbot into view when activated
   useEffect(() => {
-    // Start the attention animation after a delay
-    const timer = setTimeout(() => {
-      setShowAttention(true);
-      
-      // Animate the attention indicator
-      controls.start({
-        scale: [1, 1.1, 1],
-        transition: { 
-          repeat: 3, 
-          duration: 0.8 
-        }
-      });
-      
-      // Hide the attention indicator after animation
-      setTimeout(() => setShowAttention(false), 3000);
-    }, 2000);
-    
-    return () => clearTimeout(timer);
-  }, [controls]);
+    if (showChatbot && chatbotRef.current) {
+      // Small delay to ensure DOM is updated before scrolling
+      setTimeout(() => {
+        // Scroll the chatbot into view with smooth behavior
+        chatbotRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        // Add offset for navbar height
+        const navbarHeight = 80; // Approximate navbar height
+        window.scrollBy({
+          top: -navbarHeight,
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
+  }, [showChatbot]);
 
   return (
     <section id="chatbot" className="py-16 md:py-24 bg-gradient-to-b from-[#0B1121] to-[#0d1729] text-white relative overflow-hidden">
@@ -62,24 +58,12 @@ const ChatbotSection = () => {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              animate={controls}
               className="relative"
             >
-              {showAttention && (
-                <motion.div 
-                  className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 animate-pulse" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                  </svg>
-                  <span>Try chatting with me!</span>
-                </motion.div>
-              )}
+              {/* Removed automatic popup for better user experience */}
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
               <button
+                type="button" // Explicitly set button type to prevent form submission behavior
                 onClick={() => setShowChatbot(true)}
                 className="relative bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 hover:shadow-lg inline-flex items-center justify-center text-lg"
               >
@@ -90,7 +74,7 @@ const ChatbotSection = () => {
               </button>
             </motion.div>
           ) : (
-            <div className="w-full max-w-md">
+            <div ref={chatbotRef} className="w-full max-w-md">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

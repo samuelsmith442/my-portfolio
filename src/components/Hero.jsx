@@ -6,7 +6,7 @@ const Hero = () => {
       initial={{opacity: 0}}
       animate={{opacity: 1}}
       transition={{duration: 1}}
-      className="bg-[#0B1121] text-white py-12 md:py-16 lg:py-20 relative overflow-hidden min-h-[90vh]"
+      className="bg-[#0B1121] text-white py-12 md:py-10 lg:py-12 relative overflow-hidden min-h-[85vh] md:min-h-[75vh] lg:min-h-[70vh]"
     >
       {/* Background elements */}
       <div className="absolute inset-0 opacity-30">
@@ -14,12 +14,12 @@ const Hero = () => {
         <div className="absolute bottom-10 right-10 w-56 md:w-80 h-56 md:h-80 rounded-full bg-purple-600 blur-[90px] md:blur-[120px]"></div>
       </div>
       
-      <div className="container mx-auto text-center px-4 sm:px-6 relative z-10 flex flex-col justify-center h-full min-h-[90vh]">
+      <div className="container mx-auto text-center px-4 sm:px-6 relative z-10 flex flex-col justify-center h-full min-h-[85vh] md:min-h-[75vh] lg:min-h-[70vh]">
         <motion.h2 
           initial={{opacity: 0, y: 30}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.8, delay: 0.2}}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-[82px] font-bold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-300 leading-tight"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold mb-3 sm:mb-4 md:mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-300 leading-tight"
         >
           Samuel Smith
         </motion.h2>
@@ -28,7 +28,7 @@ const Hero = () => {
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.8, delay: 0.4}}
-          className="text-xl sm:text-2xl md:text-3xl mb-4 sm:mb-6 text-blue-100 max-w-3xl mx-auto leading-relaxed font-light"
+          className="text-xl sm:text-2xl md:text-2xl mb-2 sm:mb-3 text-blue-100 max-w-3xl mx-auto leading-relaxed font-light"
         >
           Front-End Developer & Blockchain Enthusiast | Building for the Web3 Future
         </motion.p>
@@ -37,18 +37,18 @@ const Hero = () => {
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.8, delay: 0.5}}
-          className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 text-blue-100 max-w-2xl mx-auto leading-relaxed"
+          className="text-base sm:text-lg md:text-lg mb-2 sm:mb-3 md:mb-2 text-blue-100 max-w-2xl mx-auto leading-relaxed"
         >
-          <span className="block mb-2 sm:mb-3">"By day (and sometimes by night), I'm a developer obsessed</span>
-          <span className="block mb-2 sm:mb-3">with creating web experiences that are as functional as they are visually compelling.</span>
-          <span className="block">I believe great websites start with great code—and a whole lot of heart."</span>
+          <span className="block mb-1 md:mb-0">&quot;By day (and sometimes by night), I&apos;m a developer obsessed</span>
+          <span className="block mb-1 md:mb-0">with creating web experiences that are as functional as they are visually compelling.</span>
+          <span className="block">I believe great websites start with great code—and a whole lot of heart.&quot;</span>
         </motion.p>
         
         <motion.div
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.8, delay: 0.8}}
-          className="mt-6 sm:mt-8"
+          className="mt-4 sm:mt-6"
         >
           <a 
             href="#about" 
